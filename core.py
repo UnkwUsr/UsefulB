@@ -19,7 +19,7 @@ class UsefulB:
 
             return True
         else:
-            print("Wroge answer!")
+            print("Wrong answer!")
 
             return False
 
