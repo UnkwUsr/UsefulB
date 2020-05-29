@@ -1,6 +1,10 @@
 import gi
 gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
+gi.require_version('Notify', '0.7')
+from gi.repository import Notify
+
+Notify.init("UsefulB")
 
 GLADE_FILE = "ui/gtk_break_screen.glade"
 
@@ -8,6 +12,12 @@ class GtkBreakScreen:
     def __init__(self, question_text, checkAnswer_callback):
         self.checkAnswer_callback = checkAnswer_callback
 
+        self.buildUI()
+
+        self.setAnnoying()
+        self.setQuestionText(question_text)
+
+    def buildUI(self):
         builder = Gtk.Builder()
         builder.add_from_file(GLADE_FILE)
         self.win = builder.get_object("main_window")
@@ -16,17 +26,13 @@ class GtkBreakScreen:
         self.question_label = builder.get_object("question_label")
         answer_history = builder.get_object("entry_history")
 
-        self.initHistory(answer_history)
-
         builder.connect_signals({
             "enter_pressed": self.signal_enter_pressed_handler,
             "win_delete_event": self.signal_delete_event_handler
             })
 
-        self.setAnnoying()
-        self.setQuestionText(question_text)
+        self.initHistory(answer_history)
 
-        self.count_wrongs = 0
     def initHistory(self, answer_history):
         self.answer_area.set_completion(answer_history)
         answer_history.set_match_func(lambda a, b, c: True)
@@ -43,7 +49,7 @@ class GtkBreakScreen:
         Gtk.main()
 
     def signal_delete_event_handler(self, a, b):
-        print("You cant kill me... Just solve task")
+        sendNotify("You can't kill me... Just solve task")
         return True
 
     def signal_enter_pressed_handler(self, a):
@@ -51,13 +57,10 @@ class GtkBreakScreen:
             self.win.destroy()
             Gtk.main_quit()
         else:
-            self.count_wrongs += 1
-
             self.histoy_list_store.prepend([a.get_text()])
+            a.set_text("")
 
-            a.set_text("Wrong answer![" + str(self.count_wrongs) + "]")
-            # select from start to end
-            a.select_region(0, -1)
+            sendNotify("Wrong answer!")
 
     def setAnnoying(self):
         self.win.set_keep_above(True)
@@ -72,4 +75,9 @@ class GtkBreakScreen:
     def setQuestionText(self, new_text):
         self.question_label.set_text(new_text)
 
+
+def sendNotify(text, time=3):
+    noti = Notify.Notification.new("UsefulB", text)
+    noti.set_timeout(time * 1000)
+    noti.show()
 
