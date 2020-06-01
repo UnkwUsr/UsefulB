@@ -3,7 +3,7 @@ from ui.gtk_break_screen import GtkBreakScreen, sendNotify
 from core import UsefulB
 
 
-INTERVAL = 10
+INTERVAL = 60 * 15
 PREPARING_TIME = 3
 
 a = UsefulB()
