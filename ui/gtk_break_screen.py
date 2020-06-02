@@ -6,7 +6,9 @@ from gi.repository import Notify
 
 Notify.init("UsefulB")
 
-GLADE_FILE = "ui/gtk_break_screen.glade"
+from pathlib import Path
+GLADE_FILE = str(Path(__file__).parent / "gtk_break_screen.glade")
+
 
 class GtkBreakScreen:
     def __init__(self, question_text, checkAnswer_callback):
