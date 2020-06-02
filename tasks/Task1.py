@@ -1,6 +1,6 @@
 from random import randint
 
-class Task1:
+class Task:
     def __init__(self):
         self.text = 0
         self.solution = 0

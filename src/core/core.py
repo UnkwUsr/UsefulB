@@ -1,8 +1,8 @@
-from tasks.Task1 import Task1
+from .tasks_importer import tasks
 
 class UsefulB:
     def __init__(self):
-        self.t = Task1()
+        self.t = list(tasks.values())[0].Task()
         self.solved = True
 
     def getQuestion(self):

@@ -1,6 +1,6 @@
 from time import sleep
-from ui.gtk_break_screen import GtkBreakScreen, sendNotify
-from core import UsefulB
+from ui.gtk.gtk_break_screen import GtkBreakScreen, sendNotify
+from core.core import UsefulB
 
 
 INTERVAL = 60 * 15
