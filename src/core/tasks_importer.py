@@ -1,7 +1,8 @@
 import glob
 import importlib
 
-modules = glob.glob("tasks/*.py")
+from pathlib import Path
+modules = glob.glob(str(Path(__file__).parent / "../../tasks/*.py"))
 
 tasks = {}
 
