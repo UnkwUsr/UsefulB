@@ -1,7 +1,7 @@
 from random import randint
 
 from config import config_get
-# need for create entrys in config file on startup
+# need for create entries in config file on startup
 config_get("Task1", "min_number", 1)
 config_get("Task1", "max_number", 50)
 
@@ -27,3 +27,14 @@ class Task:
 
     def getText(self):
         return self.text
+
+    # For stats:
+    def getName(self):
+        return "MathProblem"
+    def getTextSolving(self):
+        return "Solving " + self.getText()
+    def getTextWrong(self, ans):
+        return ans + " is wrong answer!"
+    def getTextGood(self):
+        return "Good job:D"
+
