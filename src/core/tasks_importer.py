@@ -26,11 +26,16 @@ for m in py_files:
     module_by_name_dict[m_name] = m_exe
 
 str_all_tasks_names = ' '.join(list(module_by_name_dict.keys()))
-# config format: list of names Tasks modules splited by space
+# config format: space separated list of Task names
 TASKS_QUEUE = config_get("Core", "tasks_queue", str_all_tasks_names).split(' ')
 
 tasks = []
 for task_name in TASKS_QUEUE:
-    tasks.append(module_by_name_dict[task_name].Task())
+    if not task_name in module_by_name_dict:
+        print(task_name + " not found in tasks_folders_paths")
+    else:
+        tasks.append(module_by_name_dict[task_name].Task())
 
+if not tasks:
+    exit("No tasks for solve. Check your tasks_queue")
 
