@@ -1,9 +1,12 @@
 from random import randint
 
+TASK_NAME = "MathProblem"
+
 from config import config_get
-# need for create entries in config file on startup
-config_get("Task1", "min_number", 1)
-config_get("Task1", "max_number", 50)
+# config format: int
+MIN_VAL = int(config_get(TASK_NAME, "min_number", 1))
+# config format: int
+MAX_VAL = int(config_get(TASK_NAME, "max_number", 50))
 
 class Task:
     def __init__(self):
@@ -11,10 +14,8 @@ class Task:
         self.solution = 0
 
     def generateNew(self):
-        min_val = int(config_get("Task1", "min_number", 1))
-        max_val = int(config_get("Task1", "max_number", 50))
-        a = randint(min_val, max_val)
-        b = randint(min_val, max_val)
+        a = randint(MIN_VAL, MAX_VAL)
+        b = randint(MIN_VAL, MAX_VAL)
 
         self.text = str(a) + " * " + str(b) + " = ?"
         self.solution = a * b
@@ -30,7 +31,7 @@ class Task:
 
     # For stats:
     def getName(self):
-        return "MathProblem"
+        return TASK_NAME
     def getTextSolving(self):
         return "Solving " + self.getText()
     def getTextWrong(self, ans):

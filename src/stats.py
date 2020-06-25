@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from config import config_get
-from pathlib import Path
-STAT_PATH = config_get("Stats", "file_path", str(Path.home() / ".config//usefulB/stats"))
+from config import config_get, CONFIG_FOLDER_PATH
+# config format: path
+STAT_PATH = config_get("Stats", "file_path", str(CONFIG_FOLDER_PATH / "stats"))
 
 class Stats:
     def __init__(self):

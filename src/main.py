@@ -1,9 +1,9 @@
 # this block should be first if We want
 # has section 'Main' on top of config file
 from config import config_get
-# config format: in minutes
+# config format: float, minutes
 INTERVAL = int(float(config_get("Main", "break_interval", 15.0)) * 60)
-# config format: in seconds
+# config format: int, seconds
 PREPARING_TIME = int(config_get("Main", "preparing_time", 3))
 if(PREPARING_TIME > INTERVAL):
     exit("[ERROR] preparing_time can't be greater than break_interval")
