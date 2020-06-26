@@ -11,21 +11,19 @@ if(PREPARING_TIME < 0):
     exit("[ERROR] preparing_time can't be negative number")
 
 from time import sleep
-from ui.gtk.gtk_break_screen import GtkBreakScreen, sendNotify
+from ui.gtk.gtk_break_screen import GtkBreakScreen
 from core.core import UsefulB
 
-a = UsefulB()
+ui = GtkBreakScreen()
+cor = UsefulB(ui)
 
 while True:
     sleep(INTERVAL - PREPARING_TIME)
     if(PREPARING_TIME != 0):
-        sendNotify("Get ready for a break after " +
+        ui.sendNotify("Get ready for a break after " +
                 str(PREPARING_TIME) + " seconds", PREPARING_TIME)
         sleep(PREPARING_TIME)
 
-    text = a.getQuestion()
-
-    br = GtkBreakScreen(text, lambda ans: a.checkAnswer(ans))
-    # this will be wait for task solved
-    br.start()
+    # it will wait until problem is solved
+    cor.start()
 
