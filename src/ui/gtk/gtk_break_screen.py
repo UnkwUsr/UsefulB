@@ -74,6 +74,10 @@ class GtkBreakScreen:
         # update answers history
         if not ans_res:
             self.histoy_list_store.prepend([entered_ans])
+        else:
+            # clean, if task solved and that's not needed anymore
+            self.histoy_list_store.clear()
+
 
 
     def setQuestionText(self, new_text):
