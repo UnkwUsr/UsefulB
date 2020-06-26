@@ -30,7 +30,7 @@ class Task:
     def getTextSolving(self):
         return "Relaxing..."
     def getTextWrong(self, ans):
-        return str((itime() - self.time)) + " seconds remain. If you want abort relaxation - type 'skip'"
+        return str(IDLING_TIME - (itime() - self.time)) + " seconds remain. If you want abort relaxation - type 'skip'"
     def getTextGood(self):
         if self.skipped:
             return "Relaxation skipped"
