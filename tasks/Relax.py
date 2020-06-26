@@ -35,7 +35,7 @@ class Task:
         if self.skipped:
             return "Relaxation skipped"
         else:
-            return "Relaxed for " + str(IDLING_TIME) + " seconds. Feel fresh!"
+            return "Relaxed for " + str(itime() - self.time) + " seconds. Feel fresh!"
 
 from time import time
 def itime():
