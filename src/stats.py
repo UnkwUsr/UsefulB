@@ -6,7 +6,7 @@ STAT_PATH = config_get("Stats", "file_path", str(CONFIG_FOLDER_PATH / "stats"))
 
 class Stats:
     def __init__(self):
-        time = datetime.now().strftime('%m-%d %H:%M:%S')
+        time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         from os.path import isfile
         newline = "\n" if isfile(STAT_PATH) else ""
         self.write(newline + "--- Started at " + time + " ---", False)
