@@ -1,12 +1,12 @@
 from random import randint
 
 TASK_NAME = "MathProblem"
-
-from config import config_get
-# config format: int
-MIN_VAL = int(config_get(TASK_NAME, "min_number", 1))
-# config format: int
-MAX_VAL = int(config_get(TASK_NAME, "max_number", 50))
+CONFIG = {
+        # config format: int
+        "min_number": 1,
+        # config format: int
+        "max_number": 50
+        }
 
 class Task:
     def __init__(self):
@@ -14,8 +14,10 @@ class Task:
         self.solution = 0
 
     def generateNew(self):
-        a = randint(MIN_VAL, MAX_VAL)
-        b = randint(MIN_VAL, MAX_VAL)
+        a = randint(CONFIG["min_number"],
+                CONFIG["max_number"],)
+        b = randint(CONFIG["min_number"],
+                CONFIG["max_number"],)
 
         self.text = str(a) + " * " + str(b) + " = ?"
         self.solution = a * b

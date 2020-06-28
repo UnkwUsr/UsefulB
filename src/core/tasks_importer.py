@@ -16,14 +16,25 @@ for p in TASKS_FOLDERS_PATHS:
 module_by_name_dict = {}
 from importlib import util as import_util
 for m in py_files:
-    # m_name = m.split("/")[-1]
-    m_name = m.split("/")[-1].split(".")[0]
+    # this is module file name (as file.py), not task name
+    m_name = m.split("/")[-1]
 
     spec = import_util.spec_from_file_location(m_name, m)
     m_exe = import_util.module_from_spec(spec)
     spec.loader.exec_module(m_exe)
 
-    module_by_name_dict[m_name] = m_exe
+    task_name = m_exe.TASK_NAME
+
+    module_by_name_dict[task_name] = m_exe
+
+    # create config entries for each loaded module
+    # (also store it for transfer to Task-constructor later)
+    if hasattr(m_exe, "CONFIG"):
+        for entry_name, def_value in m_exe.CONFIG.items():
+            # automatic cast str from config_get to type of 'default_value'
+            entry_type = type(def_value)
+            config_value = config_get(task_name, entry_name, def_value)
+            m_exe.CONFIG[entry_name] = entry_type(config_value)
 
 str_all_tasks_names = ' '.join(list(module_by_name_dict.keys()))
 # config format: space separated list of Task names
@@ -34,8 +45,10 @@ for task_name in TASKS_QUEUE:
     if not task_name in module_by_name_dict:
         print(task_name + " not found in tasks_folders_paths")
     else:
-        tasks.append(module_by_name_dict[task_name].Task())
+        cur_module = module_by_name_dict[task_name]
+        task_instance = cur_module.Task()
+        tasks.append(task_instance)
 
 if not tasks:
-    exit("No tasks for solve. Check your tasks_queue")
+    exit("No tasks for solve. Check your tasks_queue and/or tasks_folders_paths")
 

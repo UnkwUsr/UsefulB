@@ -1,19 +1,19 @@
 TASK_NAME = "Relax"
-
-from config import config_get
-# config format: float, minutes
-IDLING_TIME = int(float(config_get(TASK_NAME, "idling_time", 5.0)) * 60)
+CONFIG = {
+        # config format: float, minutes
+        "idling_time": 5.0
+        }
 
 class Task:
     def __init__(self):
-        pass
+        CONFIG["idling_time"] = int(CONFIG["idling_time"] * 60)
 
     def generateNew(self):
         self.time = itime()
         self.skipped = False
 
     def checkAnswer(self, ans):
-        if (itime() - self.time) >= IDLING_TIME:
+        if (itime() - self.time) >= CONFIG["idling_time"]:
             return True
         elif ans == "skip":
             self.skipped = True
@@ -22,7 +22,7 @@ class Task:
             return False
 
     def getText(self):
-        return "Relax for " + str(IDLING_TIME) + " seconds"
+        return "Relax for " + str(CONFIG["idling_time"]) + " seconds"
 
     # For stats:
     def getName(self):
@@ -30,7 +30,7 @@ class Task:
     def getTextSolving(self):
         return "Relaxing..."
     def getTextWrong(self, ans):
-        return str(IDLING_TIME - (itime() - self.time)) + " seconds remain. If you want abort relaxation - type 'skip'"
+        return str(CONFIG["idling_time"] - (itime() - self.time)) + " seconds remain. If you want abort relaxation - type 'skip'"
     def getTextGood(self):
         if self.skipped:
             return "Relaxation skipped"
